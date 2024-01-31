@@ -1,0 +1,21 @@
+﻿@using XafCustomComponents
+
+<DialogPopup>
+    <DialogContent>
+        <span class="text-muted">@CurrentOperationName</span>
+        <LinearProgressIndicator Progress="@GlobalPercentage" />
+        <span class="text-muted">@OperationElementsDetail</span>
+        <LinearProgressIndicator Worker="@Worker" ProgressChanged="@ProgressChangedHandler" Indeterminate="@Indeterminate" />
+        <span class="text-muted">@OperationCurrentElementDetail</span>
+    </DialogContent>
+    <DialogActions>
+        @if (GlobalPercentage < 100)
+        {
+            <DxButton Text="Cancel" RenderStyle="ButtonRenderStyle.Light" Click="@CancelClickedHandler" Enabled="@(!Indeterminate)"></DxButton>
+        }
+        else
+        {
+            <DxButton Text="OK" Click="@OkClickedHandler"></DxButton>
+        }
+    </DialogActions>
+</DialogPopup>

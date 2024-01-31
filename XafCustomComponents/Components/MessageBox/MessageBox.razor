@@ -1,0 +1,53 @@
+﻿@namespace XafCustomComponents
+
+@inherits CustomComponentBase
+
+<DialogPopup>
+    <TitleContent>
+        @if (TitleContent is not null)
+        {
+            @TitleContent
+        }
+        else
+        {
+            <CustomText TextType="@TitleType" Color="@TitleColor">@Title</CustomText>
+        }
+    </TitleContent>
+    <DialogContent>
+        @if (MessageContent is not null)
+        {
+            @MessageContent
+        }
+        else
+        {
+            @MarkupMessage
+            @Message
+        }
+    </DialogContent>
+    <DialogActions>
+        @if (YesButton is not null)
+        {
+            @YesButton
+        }
+        else if (!string.IsNullOrWhiteSpace(YesText))
+        {
+            <DxButton CssClass="mx-1" Text="@YesText" Click="@YesButtonClickHandler"></DxButton>
+        }
+        @if (NoButton is not null)
+        {
+            @NoButton
+        }
+        else if (!string.IsNullOrWhiteSpace(NoText))
+        {
+            <DxButton CssClass="mx-1" Text="@NoText" Click="@NoButtonClickHandler" RenderStyle="ButtonRenderStyle.Light"></DxButton>
+        }
+        @if (CancelButton is not null)
+        {
+            @CancelButton
+        }
+        else if (!string.IsNullOrWhiteSpace(CancelText))
+        {
+            <DxButton CssClass="mx-1" Text="@CancelText" Click="@CancelButtonClickHandler" RenderStyle="ButtonRenderStyle.Light"></DxButton>
+        }
+    </DialogActions>
+</DialogPopup>

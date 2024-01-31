@@ -1,0 +1,110 @@
+﻿@namespace XafCustomComponents
+
+@inherits CustomComponentBase
+
+<div class="mt-1 ms-4">
+    <i id="root-add-rule" class="@RemoveRuleIconClass" @onclick=@(() => CriteriaRuleRemoved.InvokeAsync(CriteriaRule)) style="cursor: pointer;"></i>
+    <DxButton CssClass="me-2 simple-criteria-buton" Id="@DataFieldButtonId" Text=@GetDataFieldText() Click="OnDataFieldButtonClick" RenderStyle="ButtonRenderStyle.Info" />
+    <DxButton CssClass="me-2 simple-criteria-buton" Id="@OperationButtonId" Text=@GetOperationText() Click="OnOperationButtonClick" RenderStyle="ButtonRenderStyle.Success" />
+    <div class="d-inline-block">
+        @switch (SelectedDataField.DataType)
+        {
+            case CriteriaRuleDataType.String:
+            case CriteriaRuleDataType.Guid:
+                <DxTextBox Text=@stringValue TextChanged="@((newValue) => OnStringValueChanged(newValue))" />
+                break;
+            case CriteriaRuleDataType.Boolean:
+                <DxCheckBox Checked=@booleanValue
+                    CheckedChanged="@((bool value) => OnBooleanValueChecked(value))">
+                </DxCheckBox>
+                break;
+            case CriteriaRuleDataType.Date:
+                <DxDateEdit Date="@dateValue"
+                    DateChanged="@((DateTime newValue) => OnDateValueChanged(newValue))">
+                </DxDateEdit>
+                break;
+            case CriteriaRuleDataType.Enum:
+                <DxComboBox Data=@EnumData
+                    Value=@enumValue
+                    ValueChanged=@((string newValue) => OnEnumValueChanged(newValue))>
+                </DxComboBox>
+                break;
+            case CriteriaRuleDataType.Number:
+                if (SelectedDataField.OriginalType == typeof(int))
+                {
+                    <DxSpinEdit Value="@IntValue"
+                    ValueChanged="@((int newValue) => OnIntValueChanged(newValue))">
+                    </DxSpinEdit>
+                }
+                else if (SelectedDataField.OriginalType == typeof(double))
+                {
+                    <DxSpinEdit Value="@DoubleValue"
+                    ValueChanged="@((double newValue) => OnDoubleValueChanged(newValue))">
+                    </DxSpinEdit>
+                }
+                else if (SelectedDataField.OriginalType == typeof(decimal))
+                {
+                    <DxSpinEdit Value="@DecimalValue"
+                    ValueChanged="@((decimal newValue) => OnDecimalValueChanged(newValue))"
+                    Mask="@NumericMask.Currency">
+                    </DxSpinEdit>
+                }
+                break;
+        }
+    </div>
+</div>
+
+<DxDropDown @bind-IsOpen="@DataFieldDropDownIsOpen"
+            @ref=@DataFieldDropDown
+            Width="250px"
+            PositionTarget="@($"#{DataFieldButtonId}")"
+            PositionMode="DropDownPositionMode.Bottom"
+            CloseMode="DropDownCloseMode.Close"
+            PreventCloseOnPositionTargetClick="true">
+    <BodyTemplate>
+        <div style="max-height: 300px; overflow-y: auto;">
+            <DxTreeView @ref=@DataFieldDropDownTreeView
+                        AllowSelectNodes="true"
+                        Data="@DataFieldDropDownTreeItems"
+                        SelectionChanged="OnDataFieldDropDownTreeSelectionChanged">
+                <DataMappings>
+                    <DxTreeViewDataMapping Text="@nameof(CriteriaRuleDataField.Text)" Children="@nameof(CriteriaRuleDataField.Children)" />
+                </DataMappings>
+            </DxTreeView>
+        </div>
+    </BodyTemplate>
+</DxDropDown>
+
+<DxDropDown @bind-IsOpen="@OperationDropDownIsOpen"
+            @ref=@OperationDropDown
+            Width="250px"
+            Scrollable="true"
+            PositionTarget="@($"#{OperationButtonId}")"
+            PositionMode="DropDownPositionMode.Bottom"
+            CloseMode="DropDownCloseMode.Close"
+            PreventCloseOnPositionTargetClick="true">
+    <BodyTemplate>
+        <div style="max-height 300px; overflow-y: auto;">
+            <DxTreeView @ref=@OperationDropDownTreeView
+                        AllowSelectNodes="true"
+                        Data="@OperationDropDownTreeItems"
+                        SelectionChanged="OnOperationDropDownTreeSelectionChanged">
+                <DataMappings>
+                    <DxTreeViewDataMapping Text="@nameof(CriteriaRuleOperation.Name)" Children="null" />
+                </DataMappings>
+            </DxTreeView>
+        </div>
+    </BodyTemplate>
+</DxDropDown>
+
+<style>
+    .simple-criteria-buton {
+        border-radius: 12px !important;
+    }
+
+    .remove-icon:hover {
+        color: red !important;
+    }
+</style>
+
+

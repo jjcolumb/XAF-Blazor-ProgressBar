@@ -1,0 +1,37 @@
+﻿@namespace XafCustomComponents
+
+@inherits CustomComponentBase
+
+<DxPopup Visible="@DialogInstance.IsVisible"
+         Closed="@ClosedHandler"
+         ShowHeader="@DialogInstance.ShowHeader"
+         ShowFooter="@DialogInstance.ShowFooter"
+         ShowCloseButton="@DialogInstance.CloseButton"
+         CloseOnOutsideClick="@DialogInstance.CloseOnOutsideClick"
+         CloseOnEscape="@DialogInstance.CloseOnEscapeKey"
+         HorizontalAlignment="@((HorizontalAlignment)PositionMap[DialogInstance.Position][0])"
+         VerticalAlignment="@((VerticalAlignment)PositionMap[DialogInstance.Position][1])" 
+         Width="@DialogInstance.Width"
+         MinWidth="@DialogInstance.MinWidth"
+         MaxWidth="@DialogInstance.MaxWidth"
+         Height="@DialogInstance.Height"
+         MinHeight="@DialogInstance.MinHeight" 
+         MaxHeight="@DialogInstance.MaxHeight" 
+         ApplyBackgroundShading="@DialogInstance.Backdrop">
+    <HeaderContentTemplate>
+        @if (TitleContent is not null)
+        {
+            @TitleContent
+        }
+        else
+        {
+            <h6>@DialogInstance.Title</h6>
+        }
+    </HeaderContentTemplate>
+    <BodyContentTemplate>
+        @DialogContent
+    </BodyContentTemplate>
+    <FooterContentTemplate>
+        @DialogActions
+    </FooterContentTemplate>
+</DxPopup>

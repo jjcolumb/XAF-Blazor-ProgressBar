@@ -1,0 +1,10 @@
+﻿@namespace XafCustomComponents
+
+@inherits CustomComponentBase
+
+@if (CriteriaRule.CriteriaRuleType == CriteriaRuleType.Simple)
+{
+    <CascadingValue Value="TargetType" Name="Type">
+        <SimpleCriteria CriteriaRule="CriteriaRule" CriteriaRuleRemoved="OnCriteriaRuleRemoved" CriteriaRuleModified="@(() => CriteriaRuleModified.InvokeAsync())" />
+    </CascadingValue>
+}

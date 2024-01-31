@@ -1,0 +1,75 @@
+﻿@namespace XafCustomComponents
+
+@inherits CustomComponentBase
+
+
+@if (TargetType is not null)
+{
+    <div>
+        <DxButton Id="root-group-button"
+              CssClass="group-button"
+              Text="@SelectedGroupButtonMenuItem.Name"
+              Click="(() => GroupButtonDropDownIsOpen = true)"
+              RenderStyle="ButtonRenderStyle.Danger" />
+        <i id="root-add-rule" class="@AddRuleIconClass" @onclick=@(() => AddRuleDropDownIsOpen = true) style="cursor: pointer;"></i>
+    </div>
+
+    @foreach (var item in RootCriteriaRule.Children)
+    {
+        <FirstLevelCriteria CriteriaRule="item" TargetType="TargetType" CriteriaRuleRemoved="OnCriteriaRuleRemoved" CriteriaRuleModified="OnCriteriaRuleModified" />
+    }
+
+    <DxMemo CssClass="mt-2" @bind-Text="CriteriaString" Rows="3" Enabled="false" />
+}
+else
+{
+    <p class="text-danger">You need to specify an ObjectType</p>
+}
+
+<DxDropDown @bind-IsOpen="@GroupButtonDropDownIsOpen"
+            @ref=@GroupButtonDropDown
+            Width="10vw"
+            PositionTarget="@($"#root-group-button")"
+            PositionMode="DropDownPositionMode.Bottom"
+            CloseMode="DropDownCloseMode.Close"
+            PreventCloseOnPositionTargetClick="true">
+    <BodyTemplate>
+        <DxTreeView @ref=@GroupButtonDropDownTreeView
+                    AllowSelectNodes="true"
+                    Data="@GroupButtonMenuItems"
+                    SelectionChanged="OnGroupButtonDropDownTreeSelectionChanged">
+            <DataMappings>
+                <DxTreeViewDataMapping Text="@nameof(GroupButtonTreeItem.Name)" Children="@nameof(GroupButtonTreeItem.Children)" />
+            </DataMappings>
+        </DxTreeView>
+    </BodyTemplate>
+</DxDropDown>
+
+<DxDropDown @bind-IsOpen="@AddRuleDropDownIsOpen"
+            @ref=@AddRuleDropDown
+            Width="15vw"
+            PositionTarget="@($"#root-add-rule")"
+            PositionMode="DropDownPositionMode.Bottom"
+            CloseMode="DropDownCloseMode.Close"
+            PreventCloseOnPositionTargetClick="true">
+    <BodyTemplate>
+        <DxTreeView @ref=@AddRuleDropDownTreeView
+                    AllowSelectNodes="true"
+                    Data="@AddRuleMenuItems"
+                    SelectionChanged="OnAddRuleDropDownTreeSelectionChanged">
+            <DataMappings>
+                <DxTreeViewDataMapping Text="@nameof(TreeItem.Name)" Children="@nameof(TreeItem.Children)" />
+            </DataMappings>
+        </DxTreeView>
+    </BodyTemplate>
+</DxDropDown>
+
+<style>
+    .group-button {
+        border-radius: 12px !important;
+    }
+
+    .add-rule-icon:hover {
+        color: black !important;
+    }
+</style>

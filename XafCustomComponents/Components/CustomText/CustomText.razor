@@ -1,0 +1,28 @@
+﻿@namespace XafCustomComponents
+
+@inherits CustomComponentBase
+
+@switch (TextType)
+{
+    case TextType.h1:
+        <h1 @attributes="UserAttributes" class="@ClassName" style="@Style">@ChildContent</h1>
+        break;
+    case TextType.h2:
+        <h2 @attributes="UserAttributes" class="@ClassName" style="@Style">@ChildContent</h2>
+        break;
+    case TextType.h3:
+        <h3 @attributes="UserAttributes" class="@ClassName" style="@Style">@ChildContent</h3>
+        break;
+    case TextType.h4:
+        <h4 @attributes="UserAttributes" class="@ClassName" style="@Style">@ChildContent</h4>
+        break;
+    case TextType.h5:
+        <h5 @attributes="UserAttributes" class="@ClassName" style="@Style">@ChildContent</h5>
+        break;
+    case TextType.h6:
+        <h6 @attributes="UserAttributes" class="@ClassName" style="@Style">@ChildContent</h6>
+        break;
+    case TextType.paragraph:
+        <p @attributes="UserAttributes" class="@ClassName" style="@Style">@ChildContent</p>
+        break;
+}

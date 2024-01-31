@@ -1,0 +1,16 @@
+﻿@namespace XafCustomComponents
+
+@inherits CustomComponentBase
+
+<DialogPopup>
+    <DialogContent>
+        @*<p>Total Operations: @($"{State?.TotalOperations}" ?? "--")</p>
+        <p>@($"({State?.OperationNum}/{State?.TotalOperations})")</p>*@
+        <p>Remaining time: @($"{State?.ExpectedCompletionTime}" ?? "--")</p>
+        <LinearProgressIndicator Worker="@Worker"
+                                 ProgressChanged="@ProgressChangedHandler" />
+    </DialogContent>
+    <DialogActions>
+        <DxButton Text="@ButtonText" RenderStyle="ButtonRenderStyle.Light" Click="@CancelClickedHandler"></DxButton>
+    </DialogActions>
+</DialogPopup>

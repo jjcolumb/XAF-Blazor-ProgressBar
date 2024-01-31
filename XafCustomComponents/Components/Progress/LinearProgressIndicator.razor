@@ -1,0 +1,26 @@
+﻿@namespace XafCustomComponents
+
+@inherits CustomComponentBase
+
+<div class="@ProgressClassNameExternalDiv" style="position: relative;">
+    <div class="@ProgressClassNameInternalDiv"
+         style="@ProgressBarStyle"
+         role="progressbar"
+         aria-valuenow="@Progress"
+         aria-valuemin="@MinProgress"
+         aria-valuemax="@MaxProgress">
+    </div>
+    <div class="@PercentageClassName" style="">@($"{Progress}%")</div>
+</div>
+
+<style>
+    .percentage{
+        position: absolute;
+        z-index: 2;
+        text-align: center;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+</style>

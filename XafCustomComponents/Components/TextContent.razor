@@ -1,0 +1,10 @@
+﻿@namespace XafCustomComponents
+
+@inherits CustomComponentBase
+
+<div @attributes="@TextContentAttributes" style="@TextContentStyle">
+    <h3 style="@Style" class="@ClassName">TextContent</h3>
+
+    @*<button @onclick="@OnClickHandler">Switch color</button>*@
+    <DxButton Click="@OnClickHandler" Text="Switch Color" />
+</div>
